@@ -8,8 +8,11 @@ export class GlobalProvider extends Component {
         this.state = {
             open_interstitial: false,
             cart: [],
+            wishlist: [],
             pushObject: this.pushObject.bind(this),
             getCart: this.getCart.bind(this),
+            addProductToWishlist: this.addProductToWishlist.bind(this),
+            removeProductToWishlist: this.removeProductToWishlist.bind(this),
             addProductToCart: this.addProductToCart.bind(this),
             removeProductToCart: this.removeProductToCart.bind(this),
         }
@@ -26,6 +29,16 @@ export class GlobalProvider extends Component {
             this.setState({ cart: sessionStorageCart });
         }else {
             this.setState({ cart: [] });
+        }
+    }
+
+    getWhishlist() {
+        const sessionStorageWishlist = JSON.parse(sessionStorage.getItem('wishlist')); // null if not exist
+
+        if (sessionStorageWishlist !== null) {
+            this.setState({ wishlist: sessionStorageWishlist });
+        }else {
+            this.setState({ wishlist: [] });
         }
     }
 
@@ -50,8 +63,23 @@ export class GlobalProvider extends Component {
         });
     }
 
+    addProductToWishlist(product) {
+        const newList = [...this.state.wishlist, product];
+        this.setState({ wishlist: newList }, () => {
+            sessionStorage.setItem('wishlist', JSON.stringify(newList));
+        });
+    }
+
+    removeProductToWishlist(product) {
+        const newList = [...this.state.wishlist].filter(item => item.id !== product.id);
+        this.setState({ wishlist: newList }, () => {
+            sessionStorage.setItem('wishlist', JSON.stringify(newList));
+        });
+    }
+
     componentDidMount() {
         this.getCart()
+        this.getWhishlist()
     }
 
     render() {

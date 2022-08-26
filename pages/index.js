@@ -1,29 +1,31 @@
 import DefaultLayaout from '../components/DefaultLayout'
 import { withStyles, Button, Container, Grid, Typography } from '@material-ui/core'
 import Link from 'next/link'
+import HeroBanner from '../components/HeroBanner/HeroBanner';
 
 const useStyles = theme => ({
-    container: {marginTop: theme.spacing(5)}
+    container: { marginTop: theme.spacing(5) },
+    title: {
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '42px'
+        },
+    }
 });
 
-const  Home = props => {
-    const {classes} = props
+const Home = props => {
+    const { classes } = props
     return (
         <DefaultLayaout>
-            <Container maxWidth="sm" className={classes.container}>
-                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            <Container maxWidth="lg" className={classes.container}>
+                <Typography className={classes.title} component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                     SuperShop
                 </Typography>
-                <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                    Something short and leading about the collection below—its contents, the creator, etc.
-                    Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-                    entirely.
-                </Typography>
+                <HeroBanner />
                 <div className={classes.heroButtons}>
-                    <Grid container spacing={2} justify="center">
+                    <Grid container spacing={2} justifyContent="center">
                         <Grid item>
                             <Link href="/boutique" passhref>
-                                <Button variant="contained" component="a">
+                                <Button variant="contained" component="a" style={{ margin: '40px 0' }}>
                                     La Boutique
                                 </Button>
                             </Link>

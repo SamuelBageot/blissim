@@ -185,7 +185,7 @@ const Boutique = props => {
     <DefaultLayaout>
       <Container maxWidth="lg" className={classes.root}>
 
-          <Grid container justify={'center'}>
+          <Grid container justifyContent={'center'}>
               <Grid item>
                   <Typography variant="h3" component="h1" className={classes.h1}>SuperShop</Typography>
               </Grid>

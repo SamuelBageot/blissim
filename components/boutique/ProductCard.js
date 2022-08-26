@@ -9,6 +9,8 @@ import {
     IconButton
 } from '@material-ui/core'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import {useContext} from "react";
 import GlobalContext from "../../state/global-context";
 
@@ -25,7 +27,7 @@ const useStyles = theme => ({
     },
     thumbnailContainer: {
         padding: theme.spacing(2),
-        textAlign: "cetner",
+        textAlign: "center",
     },
     thumbnail: {
         maxHeight: '170px',
@@ -34,15 +36,26 @@ const useStyles = theme => ({
     },
     name: {
         fontSize: '1rem',
+    },
+    iconBtn: {
+        padding: 0
     }
 });
 
-const ProductCard = (props) => {
-    const {classes, product} = props
-    const context = useContext(GlobalContext);
+const ProductCard = ({classes, product, wishedItemsIds}) => {
+    const { addProductToCart, addProductToWishlist, removeProductToWishlist } = useContext(GlobalContext);
+    const isFavorite = wishedItemsIds.includes(product.id);
 
     const handleAddToCart = (e, product) => {
-        context.addProductToCart(product, context.pushObject('open_interstitial', true))
+        addProductToCart(product, context.pushObject('open_interstitial', true))
+    }
+
+    const handleAddToWishlist = (e, product) => {
+        addProductToWishlist(product);
+    }
+
+    const handleRemoveToWishlist = (e, product) => {
+        removeProductToWishlist(product);
     }
 
     return (
@@ -71,6 +84,16 @@ const ProductCard = (props) => {
                 <IconButton onClick={e => handleAddToCart(e, product)}>
                     <ShoppingBasketIcon color="secondary"/>
                 </IconButton>
+                {
+                    isFavorite ?
+                        <IconButton className={classes.iconBtn} onClick={e => handleRemoveToWishlist(e, product)}>
+                            <Favorite color="secondary"/>
+                        </IconButton>
+                        :
+                        <IconButton className={classes.iconBtn} onClick={e => handleAddToWishlist(e, product)}>
+                            <FavoriteBorderIcon color="secondary"/>
+                        </IconButton>
+                }
             </CardActions>
         </Card>
     )

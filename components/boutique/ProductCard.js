@@ -43,11 +43,11 @@ const useStyles = theme => ({
 });
 
 const ProductCard = ({classes, product, wishedItemsIds}) => {
-    const { addProductToCart, addProductToWishlist, removeProductToWishlist } = useContext(GlobalContext);
+    const { addProductToCart, addProductToWishlist, removeProductToWishlist, pushObject } = useContext(GlobalContext);
     const isFavorite = wishedItemsIds.includes(product.id);
 
     const handleAddToCart = (e, product) => {
-        addProductToCart(product, context.pushObject('open_interstitial', true))
+        addProductToCart(product, pushObject('open_interstitial', true))
     }
 
     const handleAddToWishlist = (e, product) => {
